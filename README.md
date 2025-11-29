@@ -1,2 +1,114 @@
-# Banco_Simples_Python
-Banco_Simples_Python
+# 🏦 Sistema Bancário em Python
+
+Um sistema bancário simples desenvolvido em Python, contendo funcionalidades de **depósito**, **saque**, **extrato** e **controle de limites diários**.  
+Projeto criado para fins de estudo e prática de lógica de programação.
+
+---
+
+## 📌 Funcionalidades
+
+### ✔ Depósito  
+- Permite adicionar valores positivos ao saldo.
+- Movimentação registrada automaticamente no extrato.
+
+### ✔ Saque  
+- Verifica:
+  - Saldo disponível;
+  - Limite máximo por saque (R$ 300,00);
+  - Limite diário de 3 saques.
+- Movimentação registrada no extrato.
+
+### ✔ Extrato  
+- Exibe todas as movimentações realizadas.
+- Mostra o saldo atual formatado.
+
+### ✔ Sair  
+- Encerra o sistema com uma mensagem de despedida.
+
+---
+
+## 🧠 Lógica Utilizada
+
+O programa utiliza:
+
+- Estrutura de repetição `while True`
+- Validação de entradas com `try / except`
+- Variáveis principais:
+  - `saldo`
+  - `limite`
+  - `numero_de_saques`
+  - `LIMITE_SAQUES`
+  - `extrato`
+- Formatação monetária usando `f-strings`
+
+---
+
+## 🏗 Código Completo
+
+```python
+print("=== Sistema Bancário ===")
+print("Bem-vindo! Escolha uma das opções abaixo:\n")
+
+menu = """
+[d] Depositar
+[s] Sacar
+[e] Extrato
+[q] Sair
+=> """
+
+saldo = 0.0
+limite = 300.0
+extrato = ""
+numero_de_saques = 0
+LIMITE_SAQUES = 3
+
+while True:
+    opcao = input(menu).lower().strip()
+    
+    if opcao == "d":
+        try:
+            valor = float(input("Informe o valor para depósito: R$ "))
+        except ValueError:
+            print("❌ Valor inválido! Digite apenas números.")
+            continue
+        
+        if valor > 0:
+            saldo += valor
+            extrato += f"Depósito: +R$ {valor:.2f}\n"
+            print("✔ Depósito realizado com sucesso!")
+        else:
+            print("❌ O valor deve ser maior que zero.")
+    
+    elif opcao == "s":
+        try:
+            valor = float(input("Informe o valor para saque: R$ "))
+        except ValueError:
+            print("❌ Valor inválido! Digite apenas números.")
+            continue
+        
+        if valor <= 0:
+            print("❌ O valor deve ser maior que zero.")
+        elif valor > saldo:
+            print("❌ Saldo insuficiente.")
+        elif valor > limite:
+            print(f"❌ Limite por saque é de R$ {limite:.2f}.")
+        elif numero_de_saques >= LIMITE_SAQUES:
+            print("❌ Você já atingiu o limite diário de saques.")
+        else:
+            saldo -= valor
+            extrato += f"Saque: -R$ {valor:.2f}\n"
+            numero_de_saques += 1
+            print("✔ Saque realizado com sucesso!")
+    
+    elif opcao == "e":
+        print("\n========== EXTRATO ==========")
+        print(extrato if extrato else "Nenhuma movimentação registrada.")
+        print(f"Saldo atual: R$ {saldo:.2f}")
+        print("==============================\n")
+    
+    elif opcao == "q":
+        print("Encerrando o sistema... Obrigado por usar nosso banco!")
+        break
+    
+    else:
+        print("❌ Opção inválida. Tente novamente.")
