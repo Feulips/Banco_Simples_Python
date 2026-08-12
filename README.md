@@ -46,69 +46,115 @@ O programa utiliza:
 ## 🏗 Código Completo
 
 ```python
-print("=== Sistema Bancário ===")
-print("Bem-vindo! Escolha uma das opções abaixo:\n")
+print("=== SISTEMA BANCÁRIO ===")
+print("Bem-vindo! Escolha uma das opções abaixo.")
 
-menu = """
+MENU = """
 [d] Depositar
 [s] Sacar
 [e] Extrato
 [q] Sair
 => """
 
-saldo = 0.0
-limite = 300.0
-extrato = ""
-numero_de_saques = 0
+LIMITE_POR_SAQUE = 300.00
 LIMITE_SAQUES = 3
 
+saldo = 0.00
+numero_de_saques = 0
+extrato = []
+
+
+def obter_valor(mensagem):
+    """Solicita um valor numérico ao usuário."""
+    try:
+        return float(input(mensagem))
+    except ValueError:
+        print("❌ Valor inválido! Digite apenas números.")
+        return None
+
+
+def depositar():
+    global saldo
+
+    valor = obter_valor("Informe o valor para depósito: R$ ")
+
+    if valor is None:
+        return
+
+    if valor <= 0:
+        print("❌ O valor deve ser maior que zero.")
+        return
+
+    saldo += valor
+    extrato.append(f"Depósito: +R$ {valor:.2f}")
+
+    print("✔ Depósito realizado com sucesso!")
+
+
+def sacar():
+    global saldo, numero_de_saques
+
+    if numero_de_saques >= LIMITE_SAQUES:
+        print("❌ Você já atingiu o limite diário de saques.")
+        return
+
+    valor = obter_valor("Informe o valor para saque: R$ ")
+
+    if valor is None:
+        return
+
+    if valor <= 0:
+        print("❌ O valor deve ser maior que zero.")
+        return
+
+    if valor > saldo:
+        print("❌ Saldo insuficiente.")
+        return
+
+    if valor > LIMITE_POR_SAQUE:
+        print(
+            f"❌ O limite por saque é de "
+            f"R$ {LIMITE_POR_SAQUE:.2f}."
+        )
+        return
+
+    saldo -= valor
+    numero_de_saques += 1
+    extrato.append(f"Saque: -R$ {valor:.2f}")
+
+    print("✔ Saque realizado com sucesso!")
+
+
+def mostrar_extrato():
+    print("\n========== EXTRATO ==========")
+
+    if not extrato:
+        print("Nenhuma movimentação registrada.")
+    else:
+        for movimentacao in extrato:
+            print(movimentacao)
+
+    print("------------------------------")
+    print(f"Saldo atual: R$ {saldo:.2f}")
+    print("==============================\n")
+
+
 while True:
-    opcao = input(menu).lower().strip()
-    
+    opcao = input(MENU).lower().strip()
+
     if opcao == "d":
-        try:
-            valor = float(input("Informe o valor para depósito: R$ "))
-        except ValueError:
-            print("❌ Valor inválido! Digite apenas números.")
-            continue
-        
-        if valor > 0:
-            saldo += valor
-            extrato += f"Depósito: +R$ {valor:.2f}\n"
-            print("✔ Depósito realizado com sucesso!")
-        else:
-            print("❌ O valor deve ser maior que zero.")
-    
+        depositar()
+
     elif opcao == "s":
-        try:
-            valor = float(input("Informe o valor para saque: R$ "))
-        except ValueError:
-            print("❌ Valor inválido! Digite apenas números.")
-            continue
-        
-        if valor <= 0:
-            print("❌ O valor deve ser maior que zero.")
-        elif valor > saldo:
-            print("❌ Saldo insuficiente.")
-        elif valor > limite:
-            print(f"❌ Limite por saque é de R$ {limite:.2f}.")
-        elif numero_de_saques >= LIMITE_SAQUES:
-            print("❌ Você já atingiu o limite diário de saques.")
-        else:
-            saldo -= valor
-            extrato += f"Saque: -R$ {valor:.2f}\n"
-            numero_de_saques += 1
-            print("✔ Saque realizado com sucesso!")
-    
+        sacar()
+
     elif opcao == "e":
-        print("\n========== EXTRATO ==========")
-        print(extrato if extrato else "Nenhuma movimentação registrada.")
-        print(f"Saldo atual: R$ {saldo:.2f}")
-        print("==============================\n")
-    
+        mostrar_extrato()
+
     elif opcao == "q":
-        print("Encerrando o sistema... Obrigado por usar nosso banco!")
+        print("\nEncerrando o sistema...")
+        print("Obrigado por usar nosso banco! 👋")
         break
-    
+
     else:
         print("❌ Opção inválida. Tente novamente.")
