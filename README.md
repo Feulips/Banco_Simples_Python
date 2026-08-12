@@ -60,13 +60,6 @@ O projeto utiliza diversos conceitos fundamentais de Python:
 ---
 
 ## 🏗️ Estrutura do código
-
-O sistema foi dividido em funções para evitar que toda a lógica fique concentrada no menu principal.
-
-### `obter_valor()`
-
-Responsável por receber e validar valores digitados pelo usuário.
-
 ```python
 print("=== SISTEMA BANCÁRIO ===")
 print("Bem-vindo! Escolha uma das opções abaixo.")
