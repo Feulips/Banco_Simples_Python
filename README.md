@@ -1,49 +1,71 @@
 # 🏦 Sistema Bancário em Python
 
-Um sistema bancário simples desenvolvido em Python, contendo funcionalidades de **depósito**, **saque**, **extrato** e **controle de limites diários**.  
-Projeto criado para fins de estudo e prática de lógica de programação.
+Um sistema bancário simples desenvolvido em **Python**, criado para praticar lógica de programação, estruturas de repetição, funções, validação de dados e organização de código.
+
+O sistema permite realizar **depósitos**, **saques**, consultar o **extrato** e controlar limites de movimentação.
 
 ---
 
 ## 📌 Funcionalidades
 
-### ✔ Depósito  
-- Permite adicionar valores positivos ao saldo.
-- Movimentação registrada automaticamente no extrato.
+### 💰 Depósito
 
-### ✔ Saque  
-- Verifica:
-  - Saldo disponível;
-  - Limite máximo por saque (R$ 300,00);
-  - Limite diário de 3 saques.
-- Movimentação registrada no extrato.
+- Permite realizar depósitos com valores maiores que zero.
+- Atualiza o saldo automaticamente.
+- Registra a movimentação no extrato.
+- Valida entradas inválidas.
 
-### ✔ Extrato  
-- Exibe todas as movimentações realizadas.
-- Mostra o saldo atual formatado.
+### 💸 Saque
 
-### ✔ Sair  
-- Encerra o sistema com uma mensagem de despedida.
+O sistema realiza algumas verificações antes de permitir o saque:
 
----
+- Verifica se o valor é maior que zero;
+- Verifica se existe saldo suficiente;
+- Limita cada saque a **R$ 300,00**;
+- Permite no máximo **3 saques por dia**;
+- Registra cada saque no extrato;
+- Atualiza o saldo automaticamente.
 
-## 🧠 Lógica Utilizada
+### 📄 Extrato
 
-O programa utiliza:
+- Exibe todas as movimentações realizadas;
+- Mostra depósitos e saques individualmente;
+- Informa quando não existem movimentações;
+- Exibe o saldo atual formatado em reais.
 
-- Estrutura de repetição `while True`
-- Validação de entradas com `try / except`
-- Variáveis principais:
-  - `saldo`
-  - `limite`
-  - `numero_de_saques`
-  - `LIMITE_SAQUES`
-  - `extrato`
-- Formatação monetária usando `f-strings`
+### 🚪 Sair
+
+Encerra o sistema e exibe uma mensagem de despedida.
 
 ---
 
-## 🏗 Código Completo
+## 🧠 Conceitos praticados
+
+O projeto utiliza diversos conceitos fundamentais de Python:
+
+- `while True`
+- `if`, `elif` e `else`
+- `try / except`
+- Funções
+- Parâmetros e retorno
+- Variáveis globais
+- Listas
+- `for`
+- `f-strings`
+- Validação de dados
+- Operações matemáticas
+- Manipulação de strings
+- Organização e reutilização de código
+
+---
+
+## 🏗️ Estrutura do código
+
+O sistema foi dividido em funções para evitar que toda a lógica fique concentrada no menu principal.
+
+### `obter_valor()`
+
+Responsável por receber e validar valores digitados pelo usuário.
 
 ```python
 print("=== SISTEMA BANCÁRIO ===")
